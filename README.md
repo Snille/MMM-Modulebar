@@ -3,6 +3,7 @@
 Touch buttons for turning modules on and off.
 This an extension for the [MagicMirror²](https://magicmirror.builders/).
 This Module adds a touch menu to hide / show the defined modules.
+
 In your terminal, go to your MagicMirror's Module folder:
 
 ````
@@ -31,6 +32,7 @@ modules: [
 ## Configuration options
 
 The following properties can be configured:
+
 | Option             | Description
 | ------------------ | -----------
 | `showBorder`       | Determines if the border around the buttons should be shown. <br><br> **Possible values:** `true` or `false` <br> **Default value:** `true`
@@ -43,6 +45,7 @@ The following properties can be configured:
 ## Configuring Buttons
 
 Buttons have to be placed in `buttons` in the `config`. A button contains a profile name as key and a configuration in an object (`{}`).
+
 | Option   | Description
 | -------- | -----------
 | `text`   | A string to display in the button. <br><br> **Note:** if no value is set no text will be displayed. <br> **Possible values:** `string`
