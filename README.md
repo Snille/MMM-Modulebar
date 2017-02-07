@@ -49,7 +49,7 @@ Buttons have to be placed in `buttons` in the `config`. A button contains a prof
 | Option   | Description
 | -------- | -----------
 | `text`   | A string to display in the button. <br><br> **Note:** if no value is set no text will be displayed. <br> **Possible values:** `string`
-| `symbol` | A symbol to display in the button. <br><br> **Note:** if no value is set no symbol will be displayed. <br> **Possible values:** See [Font Awesome](http://fontawesome.io/icons/ and [Weather Icons]https://erikflowers.github.io/weather-icons/) websites
+| `symbol` | A symbol to display in the button. <br><br> **Note:** if no value is set no symbol will be displayed. <br> **Possible values:** See [Font Awesome](http://fontawesome.io/icons) and [Weather Icons](https://erikflowers.github.io/weather-icons) websites
 | `img`    | An image to display in the button. <br><br> **Note:** it will only display if no symbol is set. <br> **Possible values:** A path to an image (an url or local path)
 | `width`  | The width of the image. <br><br> **Note:** will only have effect on the image. <br> **Possible values:** `number`
 | `height` | The height of the image. <br><br> **Note:** will only have effect on the image. <br> **Possible values:** `number`
@@ -81,7 +81,7 @@ An example:
 * If only heigh or width is set for an image the other size will scale to maintain it the image it's original aspect ratio.
 * Module name is case sensitive.
 * If both the `text` and `symbol` aren't set for a button then the button won't contain anything, but still show the border.
-* The symbols are all form the [Font Awesome](http://fontawesome.io/icons/) and [Weather Icons]https://erikflowers.github.io/weather-icons/) websites.
+* The symbols are all form the [Font Awesome](http://fontawesome.io/icons) and [Weather Icons](https://erikflowers.github.io/weather-icons) websites.
 * The text may contain HTML tags and will be displayed as HTML.
 
 
