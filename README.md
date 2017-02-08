@@ -57,6 +57,7 @@ The following properties can be configured:
 
 | Option             | Description
 | ------------------ | -----------
+| `allowForce`       | Allow the module to force modules to be shown (if hidden and locked by ex. profile-switcher). <br><br> **Possible values:** `true` or `false` <br> **Default value:** `false`
 | `showBorder`       | Determines if the border around the buttons should be shown. <br><br> **Possible values:** `true` or `false` <br> **Default value:** `true`
 | `minWidth`         | The minimum width for all the buttons. <br><br> **Possible values:** `css length` <br> **Default value:** `0px`
 | `minHeight`        | The minimum height for all the buttons. <br><br> **Possible values:** `css length` <br> **Default value:** `0px`
@@ -103,7 +104,7 @@ An example:
 Here is my CSS settings for the module that I have added to my custom.css to give it the exta special look. :)
 
 ```
-/* MMM-Modulebar ------------------------------*/
+/* MMM-Modulebar ------------------------------------*/
 .modulebar-button {
   margin: 1px;
   padding: 1px 1px;
