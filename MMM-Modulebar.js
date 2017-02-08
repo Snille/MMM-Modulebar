@@ -10,7 +10,7 @@
  */
 Module.register("MMM-Modulebar",{
     defaults: {
-        // Allow the module to be forced to should be shown (if hidden by a profile-switcher).
+        // Allow the module to force modules to be shown (if hidden and locked by ex. profile-switcher).
         allowForce: false,
         // Determines if the border around the buttons should be shown.
         showBorder: true,
