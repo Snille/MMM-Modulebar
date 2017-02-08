@@ -4,6 +4,28 @@ Touch buttons for turning modules on and off.
 This an extension for the [MagicMirror²](https://magicmirror.builders/).
 This Module adds a touch menu to hide / show the defined modules.
 
+Module with symbols only in row mode:
+
+![Modulebar Row Symbols](https://github.com/Snille/MMM-Modulebar/blob/master/.github/ModuleBar-01.png)
+
+Module with symbols only in column mode:
+
+![Modulebar Column Symbols](https://github.com/Snille/MMM-Modulebar/blob/master/.github/ModuleBar-02.png)
+
+Module with symbols and text in column mode:
+
+![Modulebar Column Symbols Text](https://github.com/Snille/MMM-Modulebar/blob/master/.github/ModuleBar-03.png)
+
+Module with symbols and text in row mode:
+
+![Modulebar Row Symbols Text](https://github.com/Snille/MMM-Modulebar/blob/master/.github/ModuleBar-04.png)
+
+This is my own mirrors view (Bottom Bar) using some addition in the custom.css [see below](#custom-css)
+
+![Modulebar Custom CSS](https://github.com/Snille/MMM-Modulebar/blob/master/.github/ModuleBar-05.png)
+
+### Installation
+
 In your terminal, go to your MagicMirror's Module folder:
 
 ````
@@ -29,7 +51,7 @@ modules: [
 ]
 ````
 
-## Configuration options
+### Configuration options
 
 The following properties can be configured:
 
@@ -42,7 +64,7 @@ The following properties can be configured:
 | `direction`        | The direction of the menu. <br><br> **Possible values:** `row`, `column`, `row-reverse` or `column-reverse`<br> **Default value:** `row`
 | `buttons`          | All the different buttons in the menu. <br><br> **Possible values:** a button configuration, see [Configuring Buttons](#configuring-buttons) <br> **Default value:** Clock example button.
 
-## Configuring Buttons
+### Configuring Buttons
 
 Buttons have to be placed in `buttons` in the `config`. A button contains a profile name as key and a configuration in an object (`{}`).
 
@@ -76,7 +98,34 @@ An example:
   }
 ````
 
-## Notes
+### Custom-CSS
+
+Here is my CSS settings for the module that I have added to my custom.css to give it the exta special look. :)
+
+```
+/* MMM-Modulebar ------------------------------*/
+.modulebar-button {
+  margin: 1px;
+  padding: 1px 1px;
+  border: 2px solid #fff; 
+  background-color: #fff;
+  color: #000;
+  border-radius: 0px;
+  border-radius: 50%;
+  width: 60px;
+  height: 60px;
+}
+.modulebar-picture {
+  margin: 0px 0px;
+  border-radius: 50%;
+}
+.modulebar-menu {
+  align-items: flex-start;
+}
+/*****************************************************/
+```
+
+### Notes
 * **Important:** unfortunatly positioning this module as fullscreen will result in the menu floating top left. I currently do not know how to fix this but will look into it. If you know how don't hesitate to either write me or send me a pull request!
 * If the image is an local path and it does not show. Try different ways to write the local path. If this still does not work then try putting the image in a folder in your MagicMirror folder and use as local path `foldername/imagename`.
 * If only heigh or width is set for an image the other size will scale to maintain it the image it's original aspect ratio.
@@ -86,7 +135,7 @@ An example:
 * The text may contain HTML tags and will be displayed as HTML.
 
 
-## The MIT License (MIT)
+### The MIT License (MIT)
 
 Copyright (c) 2017 Erik Pettersson
 
