@@ -126,6 +126,10 @@ Here is my CSS settings for the module that I have added to my custom.css to giv
 /*****************************************************/
 ```
 
+### Todo
+
+* If a module are present multiple times in the config, all modules will be shown. I want to be able to specify which module of them to show.
+
 ### Notes
 * **Important:** unfortunatly positioning this module as fullscreen will result in the menu floating top left. I currently do not know how to fix this but will look into it. If you know how don't hesitate to either write me or send me a pull request!
 * If the image is an local path and it does not show. Try different ways to write the local path. If this still does not work then try putting the image in a folder in your MagicMirror folder and use as local path `foldername/imagename`.
