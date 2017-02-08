@@ -10,6 +10,8 @@
  */
 Module.register("MMM-Modulebar",{
     defaults: {
+        // Allow the module to be forced to should be shown (if hidden by a profile-switcher).
+        allowForce: false,
         // Determines if the border around the buttons should be shown.
         showBorder: true,
         // The minimum width for all the buttons.
@@ -66,10 +68,10 @@ Module.register("MMM-Modulebar",{
 			for (var i = 0; i < modules.length; i++) {
 				if (modules[i].name === name) {
 					if (modules[i].hidden) {
-						modules[i].show(self.config.animationSpeed);
+						modules[i].show(self.config.animationSpeed, {force: self.config.allowForce});
 						console.log("Showing "+modules[i].name);
 					}else{
-						modules[i].hide(self.config.animationSpeed);
+						modules[i].hide(self.config.animationSpeed, {force: self.config.allowForce});
 						console.log("Hiding "+modules[i].name);
 					}
 				}
