@@ -101,7 +101,7 @@ An example:
 
 ### Custom-CSS
 
-Here is my CSS settings for the module that I have added to my custom.css to give it the exta special look. :)
+Here is my CSS settings for the module that I have added to my custom.css to give it the extra special look. :)
 
 ```
 /* MMM-Modulebar ------------------------------------*/
