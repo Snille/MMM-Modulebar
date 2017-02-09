@@ -53,6 +53,8 @@ Module.register("MMM-Modulebar",{
 
         return menu;
     },
+	
+	
 	// Creates the buttons.
     createButton: function (self, name, data, placement) {
 		// Creates the span elemet to contain all the buttons.
@@ -63,16 +65,26 @@ Module.register("MMM-Modulebar",{
         item.style.minHeight = self.config.minHeight;
 		// Collects all modules loaded in MagicMirror.
 		var modules = MM.getModules();
-			// When a button is clicked, the module either gets hidden or shown depending on current module status.
-			item.addEventListener("click", function () {
+		// When a button is clicked, the module either gets hidden or shown depending on current module status.
+		item.addEventListener("click", function () {
 			for (var i = 0; i < modules.length; i++) {
 				if (modules[i].name === name) {
-					if (modules[i].hidden) {
-						modules[i].show(self.config.animationSpeed, {force: self.config.allowForce});
-						console.log("Showing "+modules[i].name);
-					}else{
-						modules[i].hide(self.config.animationSpeed, {force: self.config.allowForce});
-						console.log("Hiding "+modules[i].name);
+					var idnr = modules[i].data.identifier.split("_");
+					// Checks if idnum is set in config.js. If it is, it only hides that module, if not hides all modules with the same name.
+					if (idnr[1] == data.idnum || data.idnum == null) {
+						if (modules[i].hidden) {
+/*							// Working on this... :)
+							if (data.showUrl != null) {
+								var result = data.showUrl;
+								console.log(result);
+							}
+*/
+							modules[i].show(self.config.animationSpeed, {force: self.config.allowForce});
+							console.log("Showing "+modules[i].name+" ID: "+idnr[1]);
+						}else{
+							modules[i].hide(self.config.animationSpeed, {force: self.config.allowForce});
+							console.log("Hiding "+modules[i].name+" ID: "+idnr[1]);
+						}
 					}
 				}
 			}
