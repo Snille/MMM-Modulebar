@@ -77,6 +77,7 @@ Buttons have to be placed in `buttons` in the `config`. A button contains a prof
 | `size`   | The size of the symbol. <br><br> **Note:** will only have effect on the symbol. <br> **Default value:** `1` <br> **Possible values:** `1`, `2`, `3`, `4` or `5`
 | `width`  | The width of the image. <br><br> **Note:** will only have effect on the image. <br> **Possible values:** `number`
 | `height` | The height of the image. <br><br> **Note:** will only have effect on the image. <br> **Possible values:** `number`
+| `idnum`  | The uniqe module number, you can find the module numbers if you inspect the code and then check the "console" (in a nomal webbrowser) when showing and hiding the module(s) with the button. <br><br> **Possible values:** `number`
 
 An example:
 
