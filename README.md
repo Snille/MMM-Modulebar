@@ -1,8 +1,10 @@
 # MMM-Modulebar
 
-Touch buttons for turning modules on and off.
 This an extension for the [MagicMirror²](https://magicmirror.builders/).
-This Module adds a touch menu to hide / show the defined modules.
+
+This Module adds a touch menu to hide / show the defined (in config.js) modules.
+
+### Screen shots
 
 Module with symbols only in row mode:
 
@@ -27,7 +29,6 @@ This is my own mirrors view (Bottom Bar) using some addition in the custom.css [
 ### Installation
 
 In your terminal, go to your MagicMirror's Module folder:
-
 ````
 cd ~/MagicMirror/modules
 ````
@@ -37,13 +38,16 @@ Clone this repository:
 git clone https://github.com/Snille/MMM-Modulebar.git
 ````
 
-## Using the module
+### Using the module
 
 To use this module, add it to the modules array in the `config/config.js` file:
 ````javascript
 modules: [
     {
         module: 'MMM-Modulebar',
+        position: 'bottom_bar', // This can be any of the regions.
+		header: 'Modules', // Optional
+        classes: "default everyone" // Optional
         config: {
             // See 'Configuration options' for more information.
         }
@@ -67,34 +71,49 @@ The following properties can be configured:
 
 ### Configuring Buttons
 
-Buttons have to be placed in `buttons` in the `config`. A button contains a profile name as key and a configuration in an object (`{}`).
+Buttons have to be placed in `buttons` in the `config`. A button contains a uniqe number as a key and a set of options in the object (`{}`).
+
+Each button starts with it's own uniqe number (ex. "1"), then add the options needed.
 
 | Option   | Description
 | -------- | -----------
 | `text`   | A string to display in the button. <br><br> **Note:** if no value is set no text will be displayed. <br> **Possible values:** `string`
 | `symbol` | A symbol to display in the button. <br><br> **Note:** if no value is set no symbol will be displayed. <br> **Possible values:** See [Font Awesome](http://fontawesome.io/icons) website
-| `img`    | An image to display in the button. <br><br> **Note:** it will only display if no symbol is set. <br> **Possible values:** A path to an image (an url or local path)
-| `size`   | The size of the symbol. <br><br> **Note:** will only have effect on the symbol. <br> **Default value:** `1` <br> **Possible values:** `1`, `2`, `3`, `4` or `5`
-| `width`  | The width of the image. <br><br> **Note:** will only have effect on the image. <br> **Possible values:** `number`
-| `height` | The height of the image. <br><br> **Note:** will only have effect on the image. <br> **Possible values:** `number`
-| `idnum`  | The uniqe module number, you can find the module numbers if you inspect the code and then check the "console" (in a nomal webbrowser) when showing and hiding the module(s) with the button. <br><br> **Possible values:** `number`
+| `img`    | An image to display in the button. <br><br> **Note:** it will only be displayed if no symbol is set. <br> **Possible values:** A path to an image (an url or local path)
+| `size`   | The size of the symbol. <br><br> **Note:** will only have effect on a symbol. <br> **Default value:** `1` <br> **Possible values:** `1`, `2`, `3`, `4` or `5`
+| `width`  | The width of the image. <br><br> **Note:** will only have effect on an image. <br> **Possible values:** `number`
+| `height` | The height of the image. <br><br> **Note:** will only have effect on an image. <br> **Possible values:** `number`
+| `idnum`  | The uniqe module number if you have more then one of the same module (and want to manupilate only one of the modules), you can find the module numbers if you inspect the code and then check the "console" (in a nomal webbrowser) when showing and hiding the module(s) (without setting this number) with the button. <br><br> **Possible values:** `number`
 
 An example:
 
 ````javascript
   buttons: {
-    // The EXACT module name (case sensitive)
-    "currentweather": {
-      // A button with text and a symbol
+    // A number (uniqe for each button).
+    "1": {
+      // This is a button with text and a symbol
+	  // The EXACT module name (case sensitive)
+	  module: "currentweather",
       text: "Current Weather",
       symbol: "cloud",
     },
-    "weatherforecast": {
-      // A button with only a symbol
+    "2": {
+      // A button with only a symbol and an idnum to target a specific weatherforecast module.
+	  module: "weatherforecast",
       symbol: "sun-o",
+      // The ID-number of the "weatherforecast" module (when you have more then one).
+	  idnum: 8,
     },
-    "clock": {
+    "3": {
+      // A button with only a symbol and an idnum to target another specific weatherforecast module.
+	  module: "weatherforecast",
+      symbol: "star-o",
+      // The ID-number of the other "weatherforecast" module (when you have more then one).
+	  idnum: 6,
+    },
+    "4": {
       // A button with only text
+	  module: "clock",
       text: "Clock",
     },
   }
@@ -127,9 +146,6 @@ Here is my CSS settings for the module that I have added to my custom.css to giv
 /*****************************************************/
 ```
 
-### Todo
-
-* If a module are present multiple times in the config, all modules will be shown. I want to be able to specify which module of them to show.
 
 ### Notes
 * **Important:** unfortunatly positioning this module as fullscreen will result in the menu floating top left. I currently do not know how to fix this but will look into it. If you know how don't hesitate to either write me or send me a pull request!

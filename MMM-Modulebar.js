@@ -9,8 +9,11 @@
  * MIT Licensed.
  */
 Module.register("MMM-Modulebar",{
+	
+	requiresVersion: "2.1.0",
+	
     defaults: {
-        // Allow the module to force modules to be shown (if hidden and locked by ex. profile-switcher).
+        // Allow the module to force modules to be shown (if hidden and locked by another module ex. profile-switcher).
         allowForce: false,
         // Determines if the border around the buttons should be shown.
         showBorder: true,
@@ -24,13 +27,15 @@ Module.register("MMM-Modulebar",{
         direction: "row",
 		// The speed of the hide and show animation.
 		animationSpeed: 1000,
-        // The default button, add in the config fore more buttons.
+        // The default button 1. Add your buttons in the config.
 		buttons: {
-            "clock": {
+            "1": {
+				// The modules exact name to be affected.
+				module: "clock",
 				// The text to be displayed in the button.
 				text:	"Clock",
 				// Then symbol from font-awesome!
-                symbol: "clock-o",
+                symbol: "clock-o"
             }
 		}
     },
@@ -39,36 +44,41 @@ Module.register("MMM-Modulebar",{
 	getStyles: function(){
 		return ["font-awesome.css", "MMM-Modulebar.css"];
 	},
-	
+
     // Override dom generator.
     getDom: function() {
         var menu = document.createElement("span");
         menu.className = "modulebar-menu";
         menu.id = this.identifier + "_menu";
         menu.style.flexDirection = this.config.direction;
-
-        for (var name in this.config.buttons) {
-            menu.appendChild(this.createButton(this, name, this.config.buttons[name], this.config.picturePlacement));
+		// Sends each button to the "createButton" function be created.
+		for (var num in this.config.buttons) {
+			menu.appendChild(this.createButton(this, num, this.config.buttons[num], this.config.picturePlacement));
         }
 
         return menu;
     },
-	
-	
+
 	// Creates the buttons.
-    createButton: function (self, name, data, placement) {
+    createButton: function (self, num, data, placement) {
 		// Creates the span elemet to contain all the buttons.
 		var item = document.createElement("span");
-        item.id = self.identifier + "_button_" + name;
-        item.className = "modulebar-button";
-        item.style.minWidth = self.config.minWidth;
+        // Builds a uniqe indentity / button.
+		item.id = self.identifier + "_button_" + num;
+        // Sets a class to all buttons.
+		item.className = "modulebar-button";
+        // Makes sure the width and height is at least the defined minimum.
+		item.style.minWidth = self.config.minWidth;
         item.style.minHeight = self.config.minHeight;
 		// Collects all modules loaded in MagicMirror.
 		var modules = MM.getModules();
 		// When a button is clicked, the module either gets hidden or shown depending on current module status.
 		item.addEventListener("click", function () {
+			// Lists through all modules for testing.
 			for (var i = 0; i < modules.length; i++) {
-				if (modules[i].name === name) {
+				// Check if the curent module is the one.
+				if (modules[i].name === data.module) {
+					// Splits out the module number of the module with the same name.
 					var idnr = modules[i].data.identifier.split("_");
 					// Checks if idnum is set in config.js. If it is, it only hides that module, if not hides all modules with the same name.
 					if (idnr[1] == data.idnum || data.idnum == null) {
@@ -79,10 +89,14 @@ Module.register("MMM-Modulebar",{
 								console.log(result);
 							}
 */
+							// Shows the module if it's hidden.
 							modules[i].show(self.config.animationSpeed, {force: self.config.allowForce});
+							// Prints in the console what just happend (adding the ID). 
 							console.log("Showing "+modules[i].name+" ID: "+idnr[1]);
 						}else{
+							// Hides the module if it's not hidden.
 							modules[i].hide(self.config.animationSpeed, {force: self.config.allowForce});
+							// Prints in the console what just happend (adding the ID). 
 							console.log("Hiding "+modules[i].name+" ID: "+idnr[1]);
 						}
 					}
