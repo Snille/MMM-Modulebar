@@ -8,6 +8,9 @@
  *
  * MIT Licensed.
  */
+
+//var request = require('request');
+
 Module.register("MMM-Modulebar",{
 	
 	requiresVersion: "2.1.0",
@@ -82,22 +85,31 @@ Module.register("MMM-Modulebar",{
 					var idnr = modules[i].data.identifier.split("_");
 					// Checks if idnum is set in config.js. If it is, it only hides that module, if not hides all modules with the same name.
 					if (idnr[1] == data.idnum || data.idnum == null) {
+						// Check if the module is hidden.
 						if (modules[i].hidden) {
-/*							// Working on this... :)
+							// Check if there is a "showURL" defined.
 							if (data.showUrl != null) {
-								var result = data.showUrl;
-								console.log(result);
+								// Visiting the show URL.
+								fetch(data.showUrl);
+								// Prints the visited hideURL.
+								console.log("Visiting show URL: "+data.showUrl);
 							}
-*/
-							// Shows the module if it's hidden.
+							// Shows the module.
 							modules[i].show(self.config.animationSpeed, {force: self.config.allowForce});
 							// Prints in the console what just happend (adding the ID). 
 							console.log("Showing "+modules[i].name+" ID: "+idnr[1]);
 						}else{
-							// Hides the module if it's not hidden.
+							// Hides the module.
 							modules[i].hide(self.config.animationSpeed, {force: self.config.allowForce});
 							// Prints in the console what just happend (adding the ID). 
 							console.log("Hiding "+modules[i].name+" ID: "+idnr[1]);
+							// Check if there is a "hideURL" defined.
+							if (data.hideUrl != null) {
+								// Visiting the the URL.
+								fetch(data.hideUrl);
+								// Prints the visited hideURL.
+								console.log("Visiting hide URL: "+data.hideUrl);
+							}
 						}
 					}
 				}

@@ -44,10 +44,10 @@ To use this module, add it to the modules array in the `config/config.js` file:
 ````javascript
 modules: [
     {
-        module: 'MMM-Modulebar',
-        position: 'bottom_bar', // This can be any of the regions.
-		header: 'Modules', // Optional
-        classes: "default everyone" // Optional
+        module: "MMM-Modulebar",
+        position: "bottom_bar", // This can be any of the regions.
+		header: "Modules", // Optional
+        classes: "default everyone", // Optional
         config: {
             // See 'Configuration options' for more information.
         }
@@ -84,6 +84,8 @@ Each button starts with it's own uniqe number (ex. "1"), then add the options ne
 | `width`  | The width of the image. <br><br> **Note:** will only have effect on an image. <br> **Possible values:** `number`
 | `height` | The height of the image. <br><br> **Note:** will only have effect on an image. <br> **Possible values:** `number`
 | `idnum`  | The uniqe module number if you have more then one of the same module (and want to manupilate only one of the modules), you can find the module numbers if you inspect the code and then check the "console" (in a nomal webbrowser) when showing and hiding the module(s) (without setting this number) with the button. <br><br> **Possible values:** `number`
+| `showUrl`| If you have something you want to "do" via visiting a link before showing the module, this is where to put the link, it will be visited (ignoring the result) before showing the module.. <br><br> **Possible values:** `url`
+| `hideUrl`| If you have something you want to "do" via visiting a link after hiding the module, this is where to put the link, it will be visited (ignoring the result) after hiding the module.. <br><br> **Possible values:** `url`
 
 An example:
 
@@ -115,6 +117,14 @@ An example:
       // A button with only text
 	  module: "clock",
       text: "Clock",
+    },
+    "5": {
+	  // A button to show and hide for example a [MMM-MotionEye](https://github.com/CatoAntonsen/MMM-MotionEye) module.
+      module: "MMM-MotionEye",
+      idnum: 7,
+      text: "CAM1",
+      showUrl: "http://MagicMirrorIP:8080/motioneye/1",
+      hideUrl: "http://MagicMirrorIP:8080/motioneye/hide/1"
     },
   }
 ````
