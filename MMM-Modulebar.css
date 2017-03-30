@@ -7,10 +7,6 @@
  * MIT Licensed.                                     *
  *                                                   *
  *****************************************************/
-.region.fullscreen {
-    z-index: -1;
-}
-
 .modulebar-menu {
     display: flex;
     align-items: stretch;
