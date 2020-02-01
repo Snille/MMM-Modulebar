@@ -59,15 +59,15 @@ modules: [
 
 The following properties can be configured:
 
-| Option             | Description
-| ------------------ | -----------
-| `allowForce`       | Allow the module to force modules to be shown (if hidden and locked by ex. profile-switcher). <br><br> **Possible values:** `true` or `false` <br> **Default value:** `false`
-| `showBorder`       | Determines if the border around the buttons should be shown. <br><br> **Possible values:** `true` or `false` <br> **Default value:** `true`
-| `minWidth`         | The minimum width for all the buttons. <br><br> **Possible values:** `css length` <br> **Default value:** `0px`
-| `minHeight`        | The minimum height for all the buttons. <br><br> **Possible values:** `css length` <br> **Default value:** `0px`
-| `picturePlacement` | The location of the symbol or image relative to the text. <br><br> **Possible values:** `left`, `right`, `top` or `bottom` <br> **Default value:** `left`
-| `direction`        | The direction of the menu. <br><br> **Possible values:** `row`, `column`, `row-reverse` or `column-reverse`<br> **Default value:** `row`
-| `buttons`          | All the different buttons in the menu. <br><br> **Possible values:** a button configuration, see [Configuring Buttons](#configuring-buttons) <br> **Default value:** Clock example button.
+| Option             | Default | Description
+| ------------------ | ------- | -----------
+| `allowForce`       | `false` | Allow the module to force modules to be shown (if hidden and locked by ex. profile-switcher). <br><br> **Possible values:** `true` or `false`
+| `showBorder`       | `true` | Determines if the border around the buttons should be shown. <br><br> **Possible values:** `true` or `false`
+| `minWidth`         | `0px` | The minimum width for all the buttons. <br><br> **Possible values:** `css length`
+| `minHeight`        | `0px` | The minimum height for all the buttons. <br><br> **Possible values:** `css length`
+| `picturePlacement` | `left` | The location of the symbol or image relative to the text. <br><br> **Possible values:** `left`, `right`, `top` or `bottom`
+| `direction`        | `row` | The direction of the menu. <br><br> **Possible values:** `row`, `column`, `row-reverse` or `column-reverse`
+| `buttons`          | Clock example button | All the different buttons in the menu. <br><br> **Possible values:** a button configuration, see [Configuring Buttons](#configuring-buttons)
 
 ### Configuring Buttons
 
