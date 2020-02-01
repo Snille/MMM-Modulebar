@@ -83,8 +83,20 @@ Module.register("MMM-Modulebar",{
 				if (modules[i].name === data.module) {
 					// Splits out the module number of the module with the same name.
 					var idnr = modules[i].data.identifier.split("_");
-					// Checks if idnum is set in config.js. If it is, it only hides that module, if not hides all modules with the same name.
-					if (idnr[1] == data.idnum || data.idnum == null) {
+					// Check if the idnum is an array or not
+					if (Array.isArray(data.idnum)) {
+						// If it's an array, check what numbers are in it.
+						var idnumber = data.idnum.find(function(element) {
+							// Number of the module is found in the array.
+							return element == idnr[1]; 
+						});
+					// If idnum is not an array.
+					} else {
+						// Set the module id to hide.
+						var idnumber = data.idnum;
+					}
+					// Checks if idnum is set in config.js. If it is, it only hides that modules with those numbers and name, if not hides all modules with the same name.
+					if (idnr[1] == idnumber || data.idnum == null) {
 						// Check if the module is hidden.
 						if (modules[i].hidden) {
 							// Check if there is a "showURL" defined.
