@@ -46,7 +46,7 @@ modules: [
     {
         module: "MMM-Modulebar",
         position: "bottom_bar", // This can be any of the regions.
-		header: "Modules", // Optional
+        header: "Modules", // Optional
         classes: "default everyone", // Optional
         config: {
             // See 'Configuration options' for more information.
@@ -94,32 +94,32 @@ An example:
     // A number (uniqe for each button).
     "1": {
       // This is a button with text and a symbol
-	  // The EXACT module name (case sensitive)
-	  module: "currentweather",
+      // The EXACT module name (case sensitive)
+      module: "currentweather",
       text: "Current Weather",
       symbol: "cloud",
     },
     "2": {
       // A button with only a symbol and an idnum to target a specific weatherforecast module.
-	  module: "weatherforecast",
+      module: "weatherforecast",
       symbol: "sun-o",
       // The ID-number of the "weatherforecast" module (when you have more then one).
-	  idnum: 8,
+      idnum: 8,
     },
     "3": {
       // A button with only a symbol and an idnum to target another specific weatherforecast module.
-	  module: "weatherforecast",
+      module: "weatherforecast",
       symbol: "star-o",
       // The ID-number of the other "weatherforecast" module (when you have more then one).
-	  idnum: 6,
+      idnum: 6,
     },
     "4": {
       // A button with only text
-	  module: "clock",
+      module: "clock",
       text: "Clock",
     },
     "5": {
-	  // A button to show and hide for example a [MMM-MotionEye](https://github.com/CatoAntonsen/MMM-MotionEye) module.
+      // A button to show and hide for example a [MMM-MotionEye](https://github.com/CatoAntonsen/MMM-MotionEye) module.
       module: "MMM-MotionEye",
       idnum: 7,
       text: "CAM1",
