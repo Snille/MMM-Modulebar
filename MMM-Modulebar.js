@@ -64,9 +64,9 @@ Module.register("MMM-Modulebar",{
 
 	// Creates the buttons.
     createButton: function (self, num, data, placement) {
-		// Creates the span elemet to contain all the buttons.
+		// Creates the span element to contain all the buttons.
 		var item = document.createElement("span");
-        // Builds a uniqe indentity / button.
+        // Builds a unique identity / button.
 		item.id = self.identifier + "_button_" + num;
         // Sets a class to all buttons.
 		item.className = "modulebar-button";
@@ -79,7 +79,7 @@ Module.register("MMM-Modulebar",{
 		item.addEventListener("click", function () {
 			// Lists through all modules for testing.
 			for (var i = 0; i < modules.length; i++) {
-				// Check if the curent module is the one.
+				// Check if the current module is the one.
 				if (modules[i].name === data.module) {
 					// Splits out the module number of the module with the same name.
 					var idnr = modules[i].data.identifier.split("_");
@@ -108,12 +108,12 @@ Module.register("MMM-Modulebar",{
 							}
 							// Shows the module.
 							modules[i].show(self.config.animationSpeed, {force: self.config.allowForce});
-							// Prints in the console what just happend (adding the ID). 
+							// Prints in the console what just happened (adding the ID). 
 							console.log("Showing "+modules[i].name+" ID: "+idnr[1]);
 						}else{
 							// Hides the module.
 							modules[i].hide(self.config.animationSpeed, {force: self.config.allowForce});
-							// Prints in the console what just happend (adding the ID). 
+							// Prints in the console what just happened (adding the ID). 
 							console.log("Hiding "+modules[i].name+" ID: "+idnr[1]);
 							// Check if there is a "hideURL" defined.
 							if (data.hideUrl != null) {
