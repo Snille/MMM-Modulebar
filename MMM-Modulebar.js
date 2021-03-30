@@ -64,6 +64,7 @@ Module.register("MMM-Modulebar",{
 
 	// Creates the buttons.
     createButton: function (self, num, data, placement) {
+    	var ii = -1;
 		// Creates the span element to contain all the buttons.
 		var item = document.createElement("span");
         // Builds a unique identity / button.
@@ -77,8 +78,27 @@ Module.register("MMM-Modulebar",{
 		var modules = MM.getModules();
 		// When a button is clicked, the module either gets hidden or shown depending on current module status.
 		item.addEventListener("click", function () {
-			// Lists through all modules for testing.
-			for (var i = 0; i < modules.length; i++) {
+
+			if (data.module === "all") {
+
+				if( ii === -1){
+				MM.getModules().exceptWithClass('MMM-Modulebar').enumerate(function(allmodule) {
+					allmodule.hide(1000, function() {
+					//Module hidden.
+					});
+				});
+				ii = -1 * ii;
+				}else{
+					MM.getModules().exceptWithClass('MMM-Modulebar').enumerate(function(allmodule) {
+					allmodule.show(1000, function() {
+					//Module hidden.
+					});
+				});
+				ii = -1 * ii;
+				}
+			} else {
+				// Lists through all modules for testing.
+				for (var i = 0; i < modules.length; i++) {
 				// Check if the current module is the one.
 				if (modules[i].name === data.module) {
 					// Splits out the module number of the module with the same name.
@@ -121,6 +141,7 @@ Module.register("MMM-Modulebar",{
 								fetch(data.hideUrl);
 								// Prints the visited hideURL.
 								console.log("Visiting hide URL: "+data.hideUrl);
+								}
 							}
 						}
 					}
@@ -141,7 +162,7 @@ Module.register("MMM-Modulebar",{
 		// Adds the Font-Awesome symbol if specified.
         if (data.symbol) {
             var symbol = document.createElement("span");
-            symbol.className = "modulebar-picture fa fa-" + data.symbol;
+            symbol.className = "modulebar-picture " + data.symbol;
 			// Sets the size on the symbol if specified.
             if (data.size) {
                 symbol.className += " fa-" + data.size;
@@ -185,5 +206,6 @@ Module.register("MMM-Modulebar",{
         return item;
     }
 });	
+
 
 
