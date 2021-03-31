@@ -54,7 +54,7 @@ Module.register("MMM-Modulebar",{
 
     // Override dom generator.
     getDom: function() {
-    	var overlay = document.createElement("div");
+    	 var overlay = document.createElement("div");
     	overlay.className = "paint-it-black";
         var menu = document.createElement("span");
         menu.className = "modulebar-menu";
@@ -64,7 +64,7 @@ Module.register("MMM-Modulebar",{
 		for (var num in this.config.buttons) {
 			menu.appendChild(this.createButton(this, num, this.config.buttons[num], this.config.picturePlacement, overlay));
         }
-	menu.appendChild(overlay);
+		menu.appendChild(overlay);
 
         return menu;
     },
@@ -83,11 +83,13 @@ Module.register("MMM-Modulebar",{
         // Makes sure the width and height is at least the defined minimum.
 		item.style.minWidth = self.config.minWidth;
         item.style.minHeight = self.config.minHeight;
-
+		// Collects all modules loaded in MagicMirror.
+		var modules = MM.getModules();
 		// When a button is clicked, the module either gets hidden or shown depending on current module status.
 		item.addEventListener("click", function () {
 
 			if (data.module === "all") {
+
 				if( hidden ){
 				$(overlay).fadeIn(1000);
 				$(item).css("z-index","100");
@@ -208,3 +210,5 @@ Module.register("MMM-Modulebar",{
         return item;
     }
 });	
+
+
