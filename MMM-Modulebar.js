@@ -92,7 +92,7 @@ Module.register("MMM-Modulebar",{
 
 				if( hidden ){
 				$(overlay).fadeIn(1000);
-				$(item).css("z-index","100");
+				$(item).css("z-index","1000");
 				$(item).fadeTo(1000, 0.4);
 				hidden = false;
 				}else{
