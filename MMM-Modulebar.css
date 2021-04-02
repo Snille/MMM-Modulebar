@@ -39,15 +39,15 @@
     margin: -5px 0;
 }
 
-.paint-it-black{
-	position: fixed;
-		top: 0px;
-		right: 0px;
-		bottom: 0px;
-		left: 0px;
-	display: none;
-	width: 100%;
-	height: 100%;
-	background-color: #000;
-	z-index: 999;
+.paint-it-black {
+    position: fixed;
+    top: 0px;
+    right: 0px;
+    bottom: 0px;
+    left: 0px;
+    display: none;
+    width: 100%;
+    height: 100%;
+    background-color: #000;
+    z-index: 999;
 }

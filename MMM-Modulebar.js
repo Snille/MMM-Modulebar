@@ -15,90 +15,135 @@ Module.register("MMM-Modulebar",{
 	
 	requiresVersion: "2.1.0",
 	
-    defaults: {
-        // Allow the module to force modules to be shown (if hidden and locked by another module ex. profile-switcher).
-        allowForce: false,
-        // Determines if the border around the buttons should be shown.
-        showBorder: true,
-        // The minimum width for all the buttons.
-        minWidth: "0px",
-        // The minimum height for all the buttons.
-        minHeight: "0px",
-        // The location of the symbol relative to the text. Options: left, right, top or bottom
-        picturePlacement: "left",
-        // The direction of the bar. Options: row, column, row-reverse or column-reverse
-        direction: "row",
+	defaults: {
+		// Allow the module to force modules to be shown (if hidden and locked by another module ex. profile-switcher).
+		allowForce: false,
+		// Determines if the border around the buttons should be shown.
+		showBorder: true,
+		// The minimum width for all the buttons.
+		minWidth: "0px",
+		// The minimum height for all the buttons.
+		minHeight: "0px",
+		// The location of the symbol relative to the text. Options: left, right, top or bottom
+		picturePlacement: "left",
+		// The direction of the bar. Options: row, column, row-reverse or column-reverse
+		direction: "row",
 		// The speed of the hide and show animation.
 		animationSpeed: 1000,
-        // The default button 1. Add your buttons in the config.
+		// Z-Index value for the hide all plane.
+		zindex: 1000,
+		// Visibility of the "unhide all button" when all is hidden (0.0 - 1.0).
+		visability: 0.4,
+		// The default button 1. Add your buttons in the config.
 		buttons: {
-            "1": {
-				// The modules exact name to be affected.
+			"1": {
+				// Hides and show everything (Same as MMM-HideALL).
+				module: "all",
+				// When everything is shown - Toggle-on symbol from font-awesome.
+				symbol: "toggle-on",
+				// When everything is hidden - Toggle-off symbol from font-awesome.
+				symbol2: "toggle-off",
+				},
+			"2": {
+				// The modules exact name to be affected (clock in this case).
 				module: "clock",
-				// The text to be displayed in the button.
-				text:	"Clock",
-				// Then symbol from font-awesome!
-                symbol: "clock-o"
-            }
+				// When module is shown - Bell symbol from font-awesome.
+				symbol: "bell",
+				// When module is hidden - Bell-Slash symbol from font-awesome.
+				symbol2: "bell-slash",
+			}
 		}
-    },
-    
+	},
+	// Loads the jquery library.
 	getScripts: function() {
 		return ["modules/MMM-Modulebar/js/jquery.js"];
 	},
-    // Define required styles.
+
+	// Define required styles.
 	getStyles: function(){
 		return ["font-awesome.css", "MMM-Modulebar.css"];
 	},
-	
 
-    // Override dom generator.
-    getDom: function() {
-    	 var overlay = document.createElement("div");
-    	overlay.className = "paint-it-black";
-        var menu = document.createElement("span");
-        menu.className = "modulebar-menu";
-        menu.id = this.identifier + "_menu";
-        menu.style.flexDirection = this.config.direction;
+	// Override dom generator.
+	getDom: function() {
+		var overlay = document.createElement("div");
+		overlay.className = "paint-it-black";
+		var menu = document.createElement("span");
+		menu.className = "modulebar-menu";
+		menu.id = this.identifier + "_menu";
+		menu.style.flexDirection = this.config.direction;
 		// Sends each button to the "createButton" function be created.
 		for (var num in this.config.buttons) {
 			menu.appendChild(this.createButton(this, num, this.config.buttons[num], this.config.picturePlacement, overlay));
-        }
+		}
 		menu.appendChild(overlay);
-
-        return menu;
-    },
+		return menu;
+	},
 
 	// Creates the buttons.
-    createButton: function (self, num, data, placement, overlay) {
-
-    	
-    	var hidden = true;
+	createButton: function (self, num, data, placement, overlay) {
+		var hidden = true;
 		// Creates the span element to contain all the buttons.
 		var item = document.createElement("span");
-        // Builds a unique identity / button.
+		// Builds a unique identity / button.
 		item.id = self.identifier + "_button_" + num;
-        // Sets a class to all buttons.
+		// Sets a class to all buttons.
 		item.className = "modulebar-button";
-        // Makes sure the width and height is at least the defined minimum.
+		// Makes sure the width and height is at least the defined minimum.
 		item.style.minWidth = self.config.minWidth;
-        item.style.minHeight = self.config.minHeight;
+		item.style.minHeight = self.config.minHeight;
 		// Collects all modules loaded in MagicMirror.
 		var modules = MM.getModules();
 		// When a button is clicked, the module either gets hidden or shown depending on current module status.
 		item.addEventListener("click", function () {
-
+			// If "all" is defined in a button, the hide all is triggered.
 			if (data.module === "all") {
-
-				if( hidden ){
-				$(overlay).fadeIn(1000);
-				$(item).css("z-index","1000");
-				$(item).fadeTo(1000, 0.4);
-				hidden = false;
-				}else{
-				$(overlay).fadeOut(1000);
-				$(item).fadeTo(1000, 1);
-				hidden = true;
+				// Hiding all modules.
+				if (hidden) {
+					// Adding the black overlay.
+					$(overlay).fadeIn(self.config.animationSpeed);
+					// Set black overlay on this specific Z-Index.
+					$(item).css("z-index",self.config.zindex);
+					// Visability of the "unhide-button".
+					$(item).fadeTo(self.config.animationSpeed,self.config.visability);
+					// Sets the defined symbol for all hidden.
+					if (typeof data.symbol2 !== 'undefined') {
+						symbol.className = "modulebar-picture fa fa-" + data.symbol2;
+					// Sets the defined image for all hidden.
+					} else if (typeof data.img2 !== 'undefined') {
+						image.className = "modulebar-picture";
+						image.src = data.img2;
+					}
+					// Sets the defined text for all hidden.
+					if (typeof data.text2 !== 'undefined') {
+						text.innerHTML = data.text2;
+					}
+					// Prints console.
+					console.log("Hiding all!");
+					// Sets the "flip flop".
+					hidden = false;
+				// Showing all modules.
+				} else {
+					// Removing the black overlay.
+					$(overlay).fadeOut(self.config.animationSpeed);
+					// Show the button fully again.
+					$(item).fadeTo(self.config.animationSpeed, 1);
+					// Sets the defined symbol for all shown.
+					if (typeof data.symbol !== 'undefined') {
+						symbol.className = "modulebar-picture fa fa-" + data.symbol;
+					// Sets the defined image for all shown.
+					} else if (typeof data.img !== 'undefined') {
+						image.className = "modulebar-picture";
+						image.src = data.img;
+					}
+					// Sets the defined text for all shown.
+					if (typeof data.text !== 'undefined') {
+						text.innerHTML = data.text;
+					}
+					// Prints console.
+					console.log("Showing all!");
+					// Sets the "flip flop".
+					hidden = true;
 				}
 			} else {
 				// Lists through all modules for testing.
@@ -132,11 +177,35 @@ Module.register("MMM-Modulebar",{
 							}
 							// Shows the module.
 							modules[i].show(self.config.animationSpeed, {force: self.config.allowForce});
+							// Sets the defined symbol for shown module.
+							if (typeof data.symbol !== 'undefined') {
+								symbol.className = "modulebar-picture fa fa-" + data.symbol;
+							// Sets the defined image for shown module.
+							} else if (typeof data.img !== 'undefined') {
+								image.className = "modulebar-picture";
+								image.src = data.img;
+							}
+							// Sets the defined text for shown module.
+							if (typeof data.text !== 'undefined') {
+								text.innerHTML = data.text;
+							}
 							// Prints in the console what just happened (adding the ID). 
 							console.log("Showing "+modules[i].name+" ID: "+idnr[1]);
-						}else{
+						} else {
 							// Hides the module.
 							modules[i].hide(self.config.animationSpeed, {force: self.config.allowForce});
+							// Sets the defined symbol for hidden module.
+							if (typeof data.symbol2 !== 'undefined') {
+								symbol.className = "modulebar-picture fa fa-" + data.symbol2;
+							// Sets the defined image for hidden module.
+							} else if (typeof data.img2 !== 'undefined') {
+								image.className = "modulebar-picture";
+								image.src = data.img2;
+							}
+							// Sets the defined text for hidden module.
+							if (typeof data.text2 !== 'undefined') {
+								text.innerHTML = data.text2;
+							}
 							// Prints in the console what just happened (adding the ID). 
 							console.log("Hiding "+modules[i].name+" ID: "+idnr[1]);
 							// Check if there is a "hideURL" defined.
@@ -153,62 +222,59 @@ Module.register("MMM-Modulebar",{
 			}
 		});
 		// Fixes the aligning.
-        item.style.flexDirection = {
-            "right"  : "row-reverse",
-            "left"   : "row",
-            "top"    : "column",
-            "bottom" : "column-reverse"
-        }[placement];
+		item.style.flexDirection = {
+			"right"  : "row-reverse",
+			"left"   : "row",
+			"top"    : "column",
+			"bottom" : "column-reverse"
+		}[placement];
 		// Sets the border around the symbol/picture/text to black.
-        if (!self.config.showBorder) {
-            item.style.borderColor = "black";
-        }
+		if (!self.config.showBorder) {
+			item.style.borderColor = "black";
+		}
 		// Adds the Font-Awesome symbol if specified.
-        if (data.symbol) {
-            var symbol = document.createElement("span");
-            symbol.className = "modulebar-picture fa fa-" + data.symbol;
+		if (data.symbol) {
+			var symbol = document.createElement("span");
+			symbol.className = "modulebar-picture fa fa-" + data.symbol;
 			// Sets the size on the symbol if specified.
-            if (data.size) {
-                symbol.className += " fa-" + data.size;
-                symbol.className += data.size == 1 ? "g" : "x";
-            }
+			if (data.size) {
+				symbol.className += " fa-" + data.size;
+				symbol.className += data.size == 1 ? "g" : "x";
+			}
 			// Align the symbol with a margin.
-            if (data.text && placement === "left") {
-                symbol.style.marginRight = "4px";
-            }
+			if (data.text && placement === "left") {
+				symbol.style.marginRight = "4px";
+			}
 			// Adds the symbol to the item.
-            item.appendChild(symbol);
-
+			item.appendChild(symbol);
 		// Adds a picture if specified.
 		} else if (data.img) {
-            var image = document.createElement("img");
-            image.className = "modulebar-picture";
-            image.src = data.img;
+			var image = document.createElement("img");
+			image.className = "modulebar-picture";
+			image.src = data.img;
 			// Sets the size of the picture if specified.
-            if (data.width)  image.width  = data.width;
-            if (data.height) image.height = data.height;
+			if (data.width)  image.width  = data.width;
+			if (data.height) image.height = data.height;
 			// Align the picture with a margin.
-            if (data.text && placement === "left") {
-                image.style.marginRight = "4px";
-            }
+			if (data.text && placement === "left") {
+				image.style.marginRight = "4px";
+			}
 			// Adds the picture to the item.
-            item.appendChild(image);
-        }
+			item.appendChild(image);
+		}
 		// Adds the text if specified.
-        if (data.text) {
-            var text = document.createElement("span");
-            text.className = "modulebar-text";
-            text.innerHTML = data.text;
+		if (data.text) {
+			var text = document.createElement("span");
+			text.className = "modulebar-text";
+			text.innerHTML = data.text;
 			// Align the text with a margin.
-            if ((data.symbol || data.img) && placement === "right") {
-                text.style.marginRight = "4px";
-            }
+			if ((data.symbol || data.img) && placement === "right") {
+				text.style.marginRight = "4px";
+			}
 			// Adds the text to the item.
-            item.appendChild(text);
-        }
+			item.appendChild(text);
+		}
 		// All done. :)
-        return item;
-    }
-});	
-
-
+		return item;
+	}
+});

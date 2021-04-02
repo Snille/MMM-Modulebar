@@ -62,11 +62,14 @@ The following properties can be configured:
 | Option             | Default | Description
 | ------------------ | ------- | -----------
 | `allowForce`       | `false` | Allow the module to force modules to be shown (if hidden and locked by ex. profile-switcher). <br><br> **Possible values:** `true` or `false`
-| `showBorder`       | `true` | Determines if the border around the buttons should be shown. <br><br> **Possible values:** `true` or `false`
-| `minWidth`         | `0px` | The minimum width for all the buttons. <br><br> **Possible values:** `css length`
-| `minHeight`        | `0px` | The minimum height for all the buttons. <br><br> **Possible values:** `css length`
-| `picturePlacement` | `left` | The location of the symbol or image relative to the text. <br><br> **Possible values:** `left`, `right`, `top` or `bottom`
-| `direction`        | `row` | The direction of the menu. <br><br> **Possible values:** `row`, `column`, `row-reverse` or `column-reverse`
+| `showBorder`       | `true`  | Determines if the border around the buttons should be shown. <br><br> **Possible values:** `true` or `false`
+| `minWidth`         | `0px`   | The minimum width for all the buttons. <br><br> **Possible values:** `css length`
+| `minHeight`        | `0px`   | The minimum height for all the buttons. <br><br> **Possible values:** `css length`
+| `picturePlacement` | `left`  | The location of the symbol or image relative to the text. <br><br> **Possible values:** `left`, `right`, `top` or `bottom`
+| `direction`        | `row`   | The direction of the menu. <br><br> **Possible values:** `row`, `column`, `row-reverse` or `column-reverse`
+| `animationSpeed`   | `1000`  | The speed of the hide and show animation (lower is faster) **Possible values:** 0-10000. 
+| `zindex`           | `1000`  | Z-Index value for the hide all plane (this is preferably a high value for the black plane to show above everything else. **Possible values:** 0-10000.
+| `visability`       | `0.4`   | Visibility of the "unhide all button" (if defined) when all is hidden **Possible values:** 0.0 - 1.0.
 | `buttons`          | Clock example button | All the different buttons in the menu. <br><br> **Possible values:** a button configuration, see [Configuring Buttons](#configuring-buttons)
 
 ### Configuring Buttons
@@ -77,10 +80,13 @@ Each button starts with it's own uniqe number (ex. "1"), then add the options ne
 
 | Option   | Description
 | -------- | -----------
-| `module` | A module name. **Note:** if set to `all` , all of the modules will be hide or show. <br> **Possible values:** `all`,`clock`,`currentweather`,`MMM-xxx`
+| `module` | A module name. **Note:** if set to `all` , all of the modules will be hidden or shown. <br> **Possible values:** `all`,`clock`,`currentweather`,`MMM-xxx`
 | `text`   | A string to display in the button. <br><br> **Note:** if no value is set no text will be displayed. <br> **Possible values:** `string`
+| `text2`  | A string to display in the button when module is hidden. <br><br> **Note:** if no value is set no text will be displayed. <br> **Possible values:** `string`
 | `symbol` | A symbol to display in the button. <br><br> **Note:** if no value is set no symbol will be displayed. <br> **Possible values:** See [Font Awesome](http://fontawesome.io/icons) website
+| `symbol2`| A secondary symbol to display in the button when module is hidden.<br><br> **Note:** if no value is set no symbol will be displayed. <br> **Possible values:** See [Font Awesome](http://fontawesome.io/icons) website
 | `img`    | An image to display in the button. <br><br> **Note:** it will only be displayed if no symbol is set. <br> **Possible values:** A path to an image (an url or local path)
+| `img2`   | A secondary image to display in the button when module is hidden. <br><br> **Note:** it will only be displayed if no symbol is set. <br> **Possible values:** A path to an image (an url or local path)
 | `size`   | The size of the symbol. <br><br> **Note:** will only have effect on a symbol. <br> **Default value:** `1` <br> **Possible values:** `1`, `2`, `3`, `4` or `5`
 | `width`  | The width of the image. <br><br> **Note:** will only have effect on an image. <br> **Possible values:** `number`
 | `height` | The height of the image. <br><br> **Note:** will only have effect on an image. <br> **Possible values:** `number`
@@ -93,11 +99,18 @@ An example:
 ````javascript
   buttons: {
     // A number (uniqe for each button).
+    "100": {
+      // This button hides everything and uses two symbols.
+      module: "all",
+      symbol: "toggle-on",
+      symbol2: "toggle-off",
+    },
     "1": {
-      // This is a button with text and a symbol
+      // This is a button with text that changes and a symbol
       // The EXACT module name (case sensitive)
       module: "currentweather",
-      text: "Current Weather",
+      text: "Current Weather on",
+      text2: "Current Weather off",  
       symbol: "cloud",
     },
     "2": {
@@ -115,9 +128,11 @@ An example:
       idnum: 6,
     },
     "4": {
-      // A button with only text
+      // A button with text and a changing symbol.
       module: "clock",
       text: "Clock",
+      symbol: "bell",
+      symbol2: "bell-slash",
     },
     "5": {
       // A button to show and hide for example a [MMM-MotionEye](https://github.com/CatoAntonsen/MMM-MotionEye) module.
@@ -159,9 +174,9 @@ Here is my CSS settings for the module that I have added to my custom.css to giv
 
 
 ### Notes
-* **Important:** unfortunatly positioning this module as fullscreen will result in the menu floating top left. I currently do not know how to fix this but will look into it. If you know how don't hesitate to either write me or send me a pull request!
-* If the image is an local path and it does not show. Try different ways to write the local path. If this still does not work then try putting the image in a folder in your MagicMirror folder and use as local path `foldername/imagename`.
-* If only heigh or width is set for an image the other size will scale to maintain it the image it's original aspect ratio.
+* **Important:** unfortunately positioning this module as full screen will result in the menu floating top left. I currently do not know how to fix this but will look into it. If you know how don't hesitate to either write me or send me a pull request!
+* If the image is an local path and it does not show. Try different ways to write the local path. If this still does not work then try putting the image in a folder in your MagicMirror folder and use as local path `folder name/image name`.
+* If only height or width is set for an image the other size will scale to maintain it the image it's original aspect ratio.
 * Module name is case sensitive.
 * If both the `text` and `symbol` aren't set for a button then the button won't contain anything, but still show the border.
 * The symbols are all form the [Font Awesome](http://fontawesome.io/icons) website.
