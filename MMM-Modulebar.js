@@ -166,7 +166,7 @@ Module.register("MMM-Modulebar",{
 		// Adds the Font-Awesome symbol if specified.
         if (data.symbol) {
             var symbol = document.createElement("span");
-            symbol.className = "modulebar-picture " + data.symbol;
+            symbol.className = "modulebar-picture fa fa-" + data.symbol;
 			// Sets the size on the symbol if specified.
             if (data.size) {
                 symbol.className += " fa-" + data.size;
