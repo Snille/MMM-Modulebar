@@ -42,28 +42,38 @@ Module.register("MMM-Modulebar",{
             }
 		}
     },
-
+    
+	getScripts: function() {
+		return ["modules/MMM-Modulebar/js/jquery.js"];
+	},
     // Define required styles.
 	getStyles: function(){
 		return ["font-awesome.css", "MMM-Modulebar.css"];
 	},
+	
 
     // Override dom generator.
     getDom: function() {
+    	 var overlay = document.createElement("div");
+    	overlay.className = "paint-it-black";
         var menu = document.createElement("span");
         menu.className = "modulebar-menu";
         menu.id = this.identifier + "_menu";
         menu.style.flexDirection = this.config.direction;
 		// Sends each button to the "createButton" function be created.
 		for (var num in this.config.buttons) {
-			menu.appendChild(this.createButton(this, num, this.config.buttons[num], this.config.picturePlacement));
+			menu.appendChild(this.createButton(this, num, this.config.buttons[num], this.config.picturePlacement, overlay));
         }
+		menu.appendChild(overlay);
 
         return menu;
     },
 
 	// Creates the buttons.
-    createButton: function (self, num, data, placement) {
+    createButton: function (self, num, data, placement, overlay) {
+
+    	
+    	var hidden = true;
 		// Creates the span element to contain all the buttons.
 		var item = document.createElement("span");
         // Builds a unique identity / button.
@@ -77,8 +87,22 @@ Module.register("MMM-Modulebar",{
 		var modules = MM.getModules();
 		// When a button is clicked, the module either gets hidden or shown depending on current module status.
 		item.addEventListener("click", function () {
-			// Lists through all modules for testing.
-			for (var i = 0; i < modules.length; i++) {
+
+			if (data.module === "all") {
+
+				if( hidden ){
+				$(overlay).fadeIn(1000);
+				$(item).css("z-index","1000");
+				$(item).fadeTo(1000, 0.4);
+				hidden = false;
+				}else{
+				$(overlay).fadeOut(1000);
+				$(item).fadeTo(1000, 1);
+				hidden = true;
+				}
+			} else {
+				// Lists through all modules for testing.
+				for (var i = 0; i < modules.length; i++) {
 				// Check if the current module is the one.
 				if (modules[i].name === data.module) {
 					// Splits out the module number of the module with the same name.
@@ -121,6 +145,7 @@ Module.register("MMM-Modulebar",{
 								fetch(data.hideUrl);
 								// Prints the visited hideURL.
 								console.log("Visiting hide URL: "+data.hideUrl);
+								}
 							}
 						}
 					}

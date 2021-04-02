@@ -77,6 +77,7 @@ Each button starts with it's own uniqe number (ex. "1"), then add the options ne
 
 | Option   | Description
 | -------- | -----------
+| `module` | A module name. **Note:** if set to `all` , all of the modules will be hide or show. <br> **Possible values:** `all`,`clock`,`currentweather`,`MMM-xxx`
 | `text`   | A string to display in the button. <br><br> **Note:** if no value is set no text will be displayed. <br> **Possible values:** `string`
 | `symbol` | A symbol to display in the button. <br><br> **Note:** if no value is set no symbol will be displayed. <br> **Possible values:** See [Font Awesome](http://fontawesome.io/icons) website
 | `img`    | An image to display in the button. <br><br> **Note:** it will only be displayed if no symbol is set. <br> **Possible values:** A path to an image (an url or local path)
