@@ -12,9 +12,9 @@
 //var request = require('request');
 
 Module.register("MMM-Modulebar",{
-	
+
 	requiresVersion: "2.1.0",
-	
+
 	defaults: {
 		// Allow the module to force modules to be shown (if hidden and locked by another module ex. profile-switcher).
 		allowForce: false,
@@ -33,7 +33,7 @@ Module.register("MMM-Modulebar",{
 		// Z-Index value for the hide all plane.
 		zindex: 1000,
 		// Visibility of the "unhide all button" when all is hidden (0.0 - 1.0).
-		visability: 0.4,
+		visability: 0.5,
 		// The default button 1. Add your buttons in the config.
 		buttons: {
 			"1": {
@@ -89,6 +89,25 @@ Module.register("MMM-Modulebar",{
 		item.id = self.identifier + "_button_" + num;
 		// Sets a class to all buttons.
 		item.className = "modulebar-button";
+		
+		// Check for fas, far or fab in symbol.
+		if (typeof data.symbol !== 'undefined') {
+			var isfasthere = data.symbol.includes("fas ");
+			var isfabthere = data.symbol.includes("fab ");
+			var isfarthere = data.symbol.includes("far ");
+		}
+		if (typeof data.symbol2 !== 'undefined') {
+			var isfasthere2 = data.symbol2.includes("fas ");
+			var isfabthere2 = data.symbol2.includes("fab ");
+			var isfarthere2 = data.symbol2.includes("far ");
+		}
+		// If fas, fab or far is defined in the symbol, nothing will be added (assume user had the full symbol name).
+		if (isfasthere === true || isfasthere2 === true || isfabthere === true || isfabthere2 === true || isfarthere === true || isfarthere2 === true) {
+			var faclassName = "modulebar-picture ";
+		// If you just typed the symbol name, fas and fa- will be added (I'll keep this for compatibility).
+		} else {
+			var faclassName = "modulebar-picture fas fa-";
+		}
 		// Makes sure the width and height is at least the defined minimum.
 		item.style.minWidth = self.config.minWidth;
 		item.style.minHeight = self.config.minHeight;
@@ -108,7 +127,12 @@ Module.register("MMM-Modulebar",{
 					$(item).fadeTo(self.config.animationSpeed,self.config.visability);
 					// Sets the defined symbol for all hidden.
 					if (typeof data.symbol2 !== 'undefined') {
-						symbol.className = "modulebar-picture fa fa-" + data.symbol2;
+						symbol.className = faclassName + data.symbol2;
+					// Set the size if it's set.
+					if (data.size) {
+						symbol.className += " fa-" + data.size;
+						symbol.className += data.size == 1 ? "g" : "x";
+					}
 					// Sets the defined image for all hidden.
 					} else if (typeof data.img2 !== 'undefined') {
 						image.className = "modulebar-picture";
@@ -130,7 +154,12 @@ Module.register("MMM-Modulebar",{
 					$(item).fadeTo(self.config.animationSpeed, 1);
 					// Sets the defined symbol for all shown.
 					if (typeof data.symbol !== 'undefined') {
-						symbol.className = "modulebar-picture fa fa-" + data.symbol;
+						symbol.className = faclassName + data.symbol;
+					// Set the size if it's set.
+					if (data.size) {
+						symbol.className += " fa-" + data.size;
+						symbol.className += data.size == 1 ? "g" : "x";
+					}
 					// Sets the defined image for all shown.
 					} else if (typeof data.img !== 'undefined') {
 						image.className = "modulebar-picture";
@@ -179,7 +208,12 @@ Module.register("MMM-Modulebar",{
 							modules[i].show(self.config.animationSpeed, {force: self.config.allowForce});
 							// Sets the defined symbol for shown module.
 							if (typeof data.symbol !== 'undefined') {
-								symbol.className = "modulebar-picture fa fa-" + data.symbol;
+								symbol.className = faclassName + data.symbol;
+								// Set the size if it's set.
+								if (data.size) {
+									symbol.className += " fa-" + data.size;
+									symbol.className += data.size == 1 ? "g" : "x";
+								}
 							// Sets the defined image for shown module.
 							} else if (typeof data.img !== 'undefined') {
 								image.className = "modulebar-picture";
@@ -196,7 +230,12 @@ Module.register("MMM-Modulebar",{
 							modules[i].hide(self.config.animationSpeed, {force: self.config.allowForce});
 							// Sets the defined symbol for hidden module.
 							if (typeof data.symbol2 !== 'undefined') {
-								symbol.className = "modulebar-picture fa fa-" + data.symbol2;
+								symbol.className = faclassName + data.symbol2;
+								// Set the size if it's set.
+								if (data.size) {
+									symbol.className += " fa-" + data.size;
+									symbol.className += data.size == 1 ? "g" : "x";
+								}
 							// Sets the defined image for hidden module.
 							} else if (typeof data.img2 !== 'undefined') {
 								image.className = "modulebar-picture";
@@ -235,7 +274,7 @@ Module.register("MMM-Modulebar",{
 		// Adds the Font-Awesome symbol if specified.
 		if (data.symbol) {
 			var symbol = document.createElement("span");
-			symbol.className = "modulebar-picture fa fa-" + data.symbol;
+			symbol.className = faclassName + data.symbol;
 			// Sets the size on the symbol if specified.
 			if (data.size) {
 				symbol.className += " fa-" + data.size;

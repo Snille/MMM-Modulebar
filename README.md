@@ -106,12 +106,13 @@ An example:
       symbol2: "toggle-off",
     },
     "1": {
-      // This is a button with text that changes and a symbol
+      // This is a button with text that changes and a symbol that changes.
       // The EXACT module name (case sensitive)
       module: "currentweather",
       text: "Current Weather on",
-      text2: "Current Weather off",  
-      symbol: "cloud",
+      text2: "Current Weather off",
+      symbol: "fas fa-sun",
+      symbol2: "far fa-sun",
     },
     "2": {
       // A button with only a symbol and an idnum to target a specific weatherforecast module.
