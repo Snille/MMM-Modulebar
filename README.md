@@ -93,6 +93,7 @@ Each button starts with it's own uniqe number (ex. "1"), then add the options ne
 | `idnum`  | The uniqe module number if you have more then one of the same module (and want to manupilate only one of the modules), you can find the module numbers if you inspect the code and then check the "console" (in a nomal webbrowser) when showing and hiding the module(s) (without setting this number) with the button. <br><br> **Possible values:** `number` <br><br>Or if you use multiple instanses of the same module many times and you don't want to hide all or just one with one button, you can specifiy the numbers of the modules (of the same type) you want to hide in an array. <br><br>  **Number Array** `[3,6,2,7]`
 | `showUrl`| If you have something you want to "do" via visiting a link before showing the module, this is where to put the link, it will be visited (ignoring the result) before showing the module.. <br><br> **Possible values:** `url`
 | `hideUrl`| If you have something you want to "do" via visiting a link after hiding the module, this is where to put the link, it will be visited (ignoring the result) after hiding the module.. <br><br> **Possible values:** `url`
+| `gotoUrl`| Use this if want to navigate away to another page. The special value "back" will reload a previous page. This option should be used with a browser and want to exit MM. <br><br> **Possible values:** `url` or `back`
 
 An example:
 
