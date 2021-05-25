@@ -116,6 +116,13 @@ Module.register("MMM-Modulebar",{
 		// When a button is clicked, the module either gets hidden or shown depending on current module status.
 		item.addEventListener("click", function () {
 			// If "all" is defined in a button, the hide all is triggered.
+			if (typeof data.gotoUrl !== 'undefined') {
+				if (data.gotoUrl === "back") {
+					window.history.back();
+				} else {
+					window.location.assign(data.gotoUrl);
+				}
+			}
 			if (data.module === "all") {
 				// Hiding all modules.
 				if (hidden) {
