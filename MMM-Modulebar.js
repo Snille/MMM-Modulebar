@@ -54,9 +54,14 @@ Module.register("MMM-Modulebar",{
 			}
 		}
 	},
-	// Loads the jquery library.
+	// Loads the jquery library (if not loaded already).
 	getScripts: function() {
-		return ["modules/MMM-Modulebar/js/jquery.js"];
+		// Check if JQuery has already been loaded by something else. If not, then it's loaded.
+		if (typeof $!== 'function') {
+			return ["modules/MMM-Modulebar/js/jquery.js"];
+		} else {
+			return;
+		}
 	},
 
 	// Define required styles.

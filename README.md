@@ -74,9 +74,9 @@ The following properties can be configured:
 
 ### Configuring Buttons
 
-Buttons have to be placed in `buttons` in the `config`. A button contains a uniqe number as a key and a set of options in the object (`{}`).
+Buttons have to be placed in `buttons` in the `config`. A button contains a unique number as a key and a set of options in the object (`{}`).
 
-Each button starts with it's own uniqe number (ex. "1"), then add the options needed.
+Each button starts with it's own unique number (ex. "1"), then add the options needed.
 
 | Option   | Description
 | -------- | -----------
@@ -90,7 +90,7 @@ Each button starts with it's own uniqe number (ex. "1"), then add the options ne
 | `size`   | The size of the symbol. <br><br> **Note:** will only have effect on a symbol. <br> **Default value:** `1` <br> **Possible values:** `1`, `2`, `3`, `4` or `5`
 | `width`  | The width of the image. <br><br> **Note:** will only have effect on an image. <br> **Possible values:** `number`
 | `height` | The height of the image. <br><br> **Note:** will only have effect on an image. <br> **Possible values:** `number`
-| `idnum`  | The uniqe module number if you have more then one of the same module (and want to manupilate only one of the modules), you can find the module numbers if you inspect the code and then check the "console" (in a nomal webbrowser) when showing and hiding the module(s) (without setting this number) with the button. <br><br> **Possible values:** `number` <br><br>Or if you use multiple instanses of the same module many times and you don't want to hide all or just one with one button, you can specifiy the numbers of the modules (of the same type) you want to hide in an array. <br><br>  **Number Array** `[3,6,2,7]`
+| `idnum`  | The unique module number if you have more then one of the same module (and want to manipulate only one of the modules), you can find the module numbers if you inspect the code and then check the "console" (in a normal web browser) when showing and hiding the module(s) (without setting this number) with the button. <br><br> **Possible values:** `number` <br><br>Or if you use multiple instances of the same module many times and you don't want to hide all or just one with one button, you can specify the numbers of the modules (of the same type) you want to hide in an array. <br><br>  **Number Array** `[3,6,2,7]`
 | `showUrl`| If you have something you want to "do" via visiting a link before showing the module, this is where to put the link, it will be visited (ignoring the result) before showing the module.. <br><br> **Possible values:** `url`
 | `hideUrl`| If you have something you want to "do" via visiting a link after hiding the module, this is where to put the link, it will be visited (ignoring the result) after hiding the module.. <br><br> **Possible values:** `url`
 | `gotoUrl`| Use this if want to navigate away to another page. The special value "back" will reload a previous page. This option should be used with a browser and want to exit MM. <br><br> **Possible values:** `url` or `back`
@@ -99,14 +99,14 @@ An example:
 
 ````javascript
   buttons: {
-    // A number (uniqe for each button).
-    "100": {
+    // A number (unique for each button) lowest number will be displayed first...
+    "1": {
       // This button hides everything and uses two symbols.
       module: "all",
       symbol: "toggle-on",
       symbol2: "toggle-off",
     },
-    "1": {
+    "2": {
       // This is a button with text that changes and a symbol that changes.
       // The EXACT module name (case sensitive)
       module: "currentweather",
@@ -115,28 +115,28 @@ An example:
       symbol: "fas fa-sun",
       symbol2: "far fa-sun",
     },
-    "2": {
+    "4": {
       // A button with only a symbol and an idnum to target a specific weatherforecast module.
       module: "weatherforecast",
       symbol: "sun-o",
       // The ID-number of the "weatherforecast" module (when you have more then one).
       idnum: 8,
     },
-    "3": {
+    "6": {
       // A button with only a symbol and an idnum to target another specific weatherforecast module.
       module: "weatherforecast",
       symbol: "star-o",
       // The ID-number of the other "weatherforecast" module (when you have more then one).
       idnum: 6,
     },
-    "4": {
+    "8": {
       // A button with text and a changing symbol.
       module: "clock",
       text: "Clock",
       symbol: "bell",
       symbol2: "bell-slash",
     },
-    "5": {
+    "10": {
       // A button to show and hide for example a [MMM-MotionEye](https://github.com/CatoAntonsen/MMM-MotionEye) module.
       module: "MMM-MotionEye",
       idnum: 7,
