@@ -56,12 +56,13 @@ Module.register("MMM-Modulebar",{
 	},
 	// Loads the jquery library (if not loaded already).
 	getScripts: function() {
-		// Check if JQuery has already been loaded by something else. If not, then it's loaded.
-		if (typeof $!== 'function') {
+		// Tried to fix a check if JQuery had already been loaded by something else. If not, then loaded it.
+		// Did not work... I'll try again later. :)
+//		if (typeof jQuery == "undefined") {
 			return ["modules/MMM-Modulebar/js/jquery.js"];
-		} else {
-			return;
-		}
+//		} else {
+//			return;
+//		}
 	},
 
 	// Define required styles.
