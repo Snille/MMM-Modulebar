@@ -34,6 +34,8 @@ Module.register("MMM-Modulebar",{
 		zindex: 1000,
 		// Visibility of the "unhide all button" when all is hidden (0.0 - 1.0).
 		visability: 0.5,
+		// Makes it so that for any modules defined in this list, only one can be active at a time.
+		forceSwap: [],
 		// The default button 1. Add your buttons in the config.
 		buttons: {
 			"1": {
@@ -190,82 +192,102 @@ Module.register("MMM-Modulebar",{
 			} else {
 				// Lists through all modules for testing.
 				for (var i = 0; i < modules.length; i++) {
-				// Check if the current module is the one.
-				if (modules[i].name === data.module) {
-					// Splits out the module number of the module with the same name.
-					var idnr = modules[i].data.identifier.split("_");
-					// Check if the idnum is an array or not
-					if (Array.isArray(data.idnum)) {
-						// If it's an array, check what numbers are in it.
-						var idnumber = data.idnum.find(function(element) {
-							// Number of the module is found in the array.
-							return element == idnr[1]; 
-						});
-					// If idnum is not an array.
-					} else {
-						// Set the module id to hide.
-						var idnumber = data.idnum;
-					}
-					// Checks if idnum is set in config.js. If it is, it only hides that modules with those numbers and name, if not hides all modules with the same name.
-					if (idnr[1] == idnumber || data.idnum == null) {
-						// Check if the module is hidden.
-						if (modules[i].hidden) {
-							// Check if there is a "showURL" defined.
-							if (data.showUrl != null) {
-								// Visiting the show URL.
-								fetch(data.showUrl);
-								// Prints the visited hideURL.
-								console.log("Visiting show URL: "+data.showUrl);
-							}
-							// Shows the module.
-							modules[i].show(self.config.animationSpeed, {force: self.config.allowForce});
-							// Sets the defined symbol for shown module.
-							if (typeof data.symbol !== 'undefined') {
-								symbol.className = faclassName + data.symbol;
-								// Set the size if it's set.
-								if (data.size) {
-									symbol.className += " fa-" + data.size;
-									symbol.className += data.size == 1 ? "g" : "x";
-								}
-							// Sets the defined image for shown module.
-							} else if (typeof data.img !== 'undefined') {
-								image.className = "modulebar-picture";
-								image.src = data.img;
-							}
-							// Sets the defined text for shown module.
-							if (typeof data.text !== 'undefined') {
-								text.innerHTML = data.text;
-							}
-							// Prints in the console what just happened (adding the ID). 
-							console.log("Showing "+modules[i].name+" ID: "+idnr[1]);
+					// Check if the current module is the one.
+					if (modules[i].name === data.module) {
+						// Splits out the module number of the module with the same name.
+						var idnr = modules[i].data.identifier.split("_");
+						// Check if the idnum is an array or not
+						if (Array.isArray(data.idnum)) {
+							// If it's an array, check what numbers are in it.
+							var idnumber = data.idnum.find(function(element) {
+								// Number of the module is found in the array.
+								return element == idnr[1]; 
+							});
+						// If idnum is not an array.
 						} else {
-							// Hides the module.
-							modules[i].hide(self.config.animationSpeed, {force: self.config.allowForce});
-							// Sets the defined symbol for hidden module.
-							if (typeof data.symbol2 !== 'undefined') {
-								symbol.className = faclassName + data.symbol2;
-								// Set the size if it's set.
-								if (data.size) {
-									symbol.className += " fa-" + data.size;
-									symbol.className += data.size == 1 ? "g" : "x";
+							// Set the module id to hide.
+							var idnumber = data.idnum;
+						}
+						// Checks if idnum is set in config.js. If it is, it only hides that modules with those numbers and name, if not hides all modules with the same name.
+						if (idnr[1] == idnumber || data.idnum == null) {
+							// Check if the module is hidden.
+							if (modules[i].hidden) {
+								// Check if there is a "showURL" defined.
+								if (data.showUrl != null) {
+									// Visiting the show URL.
+									fetch(data.showUrl);
+									// Prints the visited hideURL.
+									console.log("Visiting show URL: "+data.showUrl);
 								}
-							// Sets the defined image for hidden module.
-							} else if (typeof data.img2 !== 'undefined') {
-								image.className = "modulebar-picture";
-								image.src = data.img2;
-							}
-							// Sets the defined text for hidden module.
-							if (typeof data.text2 !== 'undefined') {
-								text.innerHTML = data.text2;
-							}
-							// Prints in the console what just happened (adding the ID). 
-							console.log("Hiding "+modules[i].name+" ID: "+idnr[1]);
-							// Check if there is a "hideURL" defined.
-							if (data.hideUrl != null) {
-								// Visiting the the URL.
-								fetch(data.hideUrl);
-								// Prints the visited hideURL.
-								console.log("Visiting hide URL: "+data.hideUrl);
+
+								// Hide all other modules if config is set.
+								var forceSwapModules = self.config.forceSwap;
+								if (forceSwapModules.length > 0) {
+									// Iterate through each of the modules we would like to swap.
+									for (var idx = 0; idx < forceSwapModules.length; idx++) {
+										for (var j = 0; j < modules.length; j++) {
+											// Find the actual module that matches the module name we want to swap.
+											var actualModule = modules[j];
+											if (j != i && actualModule.name == forceSwapModules[idx]) {
+												// If the module that matches the name is currently showing, hide it, unless it matches the module for which the button was pressed.
+												if (!actualModule.hidden) {
+													actualModule.hide(self.config.animationSpeed, {force: self.config.allowForce});
+												}
+											}
+
+										}
+									}
+								}
+
+								// Shows the module.
+								modules[i].show(self.config.animationSpeed, {force: self.config.allowForce});
+								// Sets the defined symbol for shown module.
+								if (typeof data.symbol !== 'undefined') {
+									symbol.className = faclassName + data.symbol;
+									// Set the size if it's set.
+									if (data.size) {
+										symbol.className += " fa-" + data.size;
+										symbol.className += data.size == 1 ? "g" : "x";
+									}
+								// Sets the defined image for shown module.
+								} else if (typeof data.img !== 'undefined') {
+									image.className = "modulebar-picture";
+									image.src = data.img;
+								}
+								// Sets the defined text for shown module.
+								if (typeof data.text !== 'undefined') {
+									text.innerHTML = data.text;
+								}
+								// Prints in the console what just happened (adding the ID). 
+								console.log("Showing "+modules[i].name+" ID: "+idnr[1]);
+							} else {
+								// Hides the module.
+								modules[i].hide(self.config.animationSpeed, {force: self.config.allowForce});
+								// Sets the defined symbol for hidden module.
+								if (typeof data.symbol2 !== 'undefined') {
+									symbol.className = faclassName + data.symbol2;
+									// Set the size if it's set.
+									if (data.size) {
+										symbol.className += " fa-" + data.size;
+										symbol.className += data.size == 1 ? "g" : "x";
+									}
+								// Sets the defined image for hidden module.
+								} else if (typeof data.img2 !== 'undefined') {
+									image.className = "modulebar-picture";
+									image.src = data.img2;
+								}
+								// Sets the defined text for hidden module.
+								if (typeof data.text2 !== 'undefined') {
+									text.innerHTML = data.text2;
+								}
+								// Prints in the console what just happened (adding the ID). 
+								console.log("Hiding "+modules[i].name+" ID: "+idnr[1]);
+								// Check if there is a "hideURL" defined.
+								if (data.hideUrl != null) {
+									// Visiting the the URL.
+									fetch(data.hideUrl);
+									// Prints the visited hideURL.
+									console.log("Visiting hide URL: "+data.hideUrl);
 								}
 							}
 						}
