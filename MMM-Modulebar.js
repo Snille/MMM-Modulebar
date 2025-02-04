@@ -218,7 +218,7 @@ Module.register("MMM-Modulebar",{
 								console.log("Visiting show URL: "+data.showUrl);
 							}
 							// Shows the module.
-							modules[i].show(self.config.animationSpeed, {force: self.config.allowForce});
+							modules[i].show(self.config.animationSpeed, 0, {force: self.config.allowForce});
 							// Sets the defined symbol for shown module.
 							if (typeof data.symbol !== 'undefined') {
 								symbol.className = faclassName + data.symbol;
@@ -240,7 +240,7 @@ Module.register("MMM-Modulebar",{
 							console.log("Showing "+modules[i].name+" ID: "+idnr[1]);
 						} else {
 							// Hides the module.
-							modules[i].hide(self.config.animationSpeed, {force: self.config.allowForce});
+							modules[i].hide(self.config.animationSpeed, 0, {force: self.config.allowForce});
 							// Sets the defined symbol for hidden module.
 							if (typeof data.symbol2 !== 'undefined') {
 								symbol.className = faclassName + data.symbol2;
