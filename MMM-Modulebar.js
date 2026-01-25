@@ -9,7 +9,6 @@
  * MIT Licensed.
  */
 
-//var request = require('request');
 
 Module.register("MMM-Modulebar",{
 
