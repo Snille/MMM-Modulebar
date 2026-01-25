@@ -1,0 +1,19 @@
+{
+  "name": "MMM-Modulebar",
+  "version": "1.0.0",
+  "description": "MagicMirror² module that adds touch buttons for showing/hiding other modules.",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Snille/MMM-Modulebar.git"
+  },
+  "keywords": [
+    "magicmirror",
+    "magicmirror2",
+    "MagicMirror²",
+    "touch",
+    "ui",
+    "module"
+  ],
+  "author": "Erik Pettersson",
+  "license": "MIT"
+}
