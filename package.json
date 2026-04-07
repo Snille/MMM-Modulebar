@@ -8,12 +8,20 @@
   },
   "keywords": [
     "magicmirror",
-    "magicmirror2",
+    "magicmirror²",
     "MagicMirror²",
     "touch",
     "ui",
     "module"
   ],
   "author": "Erik Pettersson",
-  "license": "MIT"
+  "license": "MIT",
+  "scripts": {
+    "lint": "eslint"
+  },
+  "devDependencies": {
+    "@eslint/js": "^9.24.0",
+    "eslint": "^9.24.0",
+    "globals": "^16.0.0"
+  }
 }

@@ -1,6 +1,6 @@
 /* global Module */
 
-/* Magic Mirror 2
+/* MagicMirror²
  * Module: MMM-Modulebar
  *
  * By Erik Pettersson
@@ -53,17 +53,6 @@ Module.register("MMM-Modulebar",{
 			}
 		}
 	},
-	// Loads the jquery library (if not loaded already).
-	getScripts: function() {
-		// Tried to fix a check if JQuery had already been loaded by something else. If not, then loaded it.
-		// Did not work... I'll try again later. :)
-//		if (typeof jQuery == "undefined") {
-			return ["modules/MMM-Modulebar/js/jquery.js"];
-//		} else {
-//			return;
-//		}
-	},
-
 	// Define required styles.
 	getStyles: function(){
 		return ["font-awesome.css", "MMM-Modulebar.css"];
@@ -73,6 +62,7 @@ Module.register("MMM-Modulebar",{
 	getDom: function() {
 		var overlay = document.createElement("div");
 		overlay.className = "paint-it-black";
+		overlay.style.transitionDuration = this.config.animationSpeed + "ms";
 		var menu = document.createElement("span");
 		menu.className = "modulebar-menu";
 		menu.id = this.identifier + "_menu";
@@ -94,17 +84,25 @@ Module.register("MMM-Modulebar",{
 		item.id = self.identifier + "_button_" + num;
 		// Sets a class to all buttons.
 		item.className = "modulebar-button";
+		item.style.transitionDuration = self.config.animationSpeed + "ms";
 		
+		var isfasthere = false;
+		var isfabthere = false;
+		var isfarthere = false;
+		var isfasthere2 = false;
+		var isfabthere2 = false;
+		var isfarthere2 = false;
+
 		// Check for fas, far or fab in symbol.
 		if (typeof data.symbol !== 'undefined') {
-			var isfasthere = data.symbol.includes("fas ");
-			var isfabthere = data.symbol.includes("fab ");
-			var isfarthere = data.symbol.includes("far ");
+			isfasthere = data.symbol.includes("fas ");
+			isfabthere = data.symbol.includes("fab ");
+			isfarthere = data.symbol.includes("far ");
 		}
 		if (typeof data.symbol2 !== 'undefined') {
-			var isfasthere2 = data.symbol2.includes("fas ");
-			var isfabthere2 = data.symbol2.includes("fab ");
-			var isfarthere2 = data.symbol2.includes("far ");
+			isfasthere2 = data.symbol2.includes("fas ");
+			isfabthere2 = data.symbol2.includes("fab ");
+			isfarthere2 = data.symbol2.includes("far ");
 		}
 		// If fas, fab or far is defined in the symbol, nothing will be added (assume user had the full symbol name).
 		if (isfasthere === true || isfasthere2 === true || isfabthere === true || isfabthere2 === true || isfarthere === true || isfarthere2 === true) {
@@ -132,11 +130,11 @@ Module.register("MMM-Modulebar",{
 				// Hiding all modules.
 				if (hidden) {
 					// Adding the black overlay.
-					$(overlay).fadeIn(self.config.animationSpeed);
+					overlay.classList.add("paint-it-black--visible");
 					// Set black overlay on this specific Z-Index.
-					$(item).css("z-index",self.config.zindex);
+					item.style.zIndex = self.config.zindex;
 					// Visability of the "unhide-button".
-					$(item).fadeTo(self.config.animationSpeed,self.config.visability);
+					item.style.opacity = self.config.visability;
 					// Sets the defined symbol for all hidden.
 					if (typeof data.symbol2 !== 'undefined') {
 						symbol.className = faclassName + data.symbol2;
@@ -161,9 +159,9 @@ Module.register("MMM-Modulebar",{
 				// Showing all modules.
 				} else {
 					// Removing the black overlay.
-					$(overlay).fadeOut(self.config.animationSpeed);
+					overlay.classList.remove("paint-it-black--visible");
 					// Show the button fully again.
-					$(item).fadeTo(self.config.animationSpeed, 1);
+					item.style.opacity = 1;
 					// Sets the defined symbol for all shown.
 					if (typeof data.symbol !== 'undefined') {
 						symbol.className = faclassName + data.symbol;
