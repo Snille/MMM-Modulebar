@@ -4,6 +4,8 @@ This is an extension for [MagicMirror²](https://magicmirror.builders/).
 
 This module adds a touch menu to hide or show the modules defined in `config.js`.
 
+The `all` button covers the screen with a black overlay and leaves its restore button accessible. Press it again to restore the previous view, including the visibility of any swapped modules. Legacy `display: none` rules for `.paint-it-black` in `custom.css` are supported.
+
 ## Screenshots
 
 Module with symbols only in row mode:
@@ -194,6 +196,8 @@ npm run check
 ```
 
 The tests use Node's built-in test runner and exercise button clicks, swap groups, instance selection and visibility locks.
+
+Version 1.1.1 has been tested on MagicMirror 2.39.0-develop with Node.js 22.23.3, including the `all` button and swaps between modules.
 
 ## Custom CSS
 

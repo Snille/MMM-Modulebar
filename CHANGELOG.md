@@ -9,6 +9,7 @@ All notable changes to this project will be documented in this file.
 - Fixed the hide-all overlay remaining invisible with legacy `display: none` rules in custom.css after the native DOM migration.
 - Applied the configured `zindex` to the overlay as well as its restore button, keeping the button above the blackout layer.
 - Added a regression test for legacy CSS compatibility and custom stacking order; verified full-screen blackout and restoration on the development mirror.
+- Raised ESLint and globals minimum versions to the tested lockfile versions, covering the overlapping Dependabot updates; all eight regression tests pass.
 
 ## 1.1.0 - 2026-10-18
 
