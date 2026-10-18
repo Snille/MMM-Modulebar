@@ -1,6 +1,6 @@
 {
   "name": "mmm-modulebar",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "type": "commonjs",
   "description": "MagicMirror² module that adds touch buttons for showing/hiding other modules.",
   "repository": {
@@ -18,7 +18,9 @@
   "author": "Erik Pettersson",
   "license": "MIT",
   "scripts": {
-    "lint": "eslint"
+    "lint": "eslint",
+    "test": "node --test",
+    "check": "npm run lint && npm test"
   },
   "devDependencies": {
     "@eslint/js": "^10.0.1",

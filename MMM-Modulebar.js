@@ -33,6 +33,8 @@ Module.register("MMM-Modulebar",{
 		zindex: 1000,
 		// Visibility of the "unhide all button" when all is hidden (0.0 - 1.0).
 		visability: 0.5,
+		// Module names that should replace each other when shown from this bar.
+		forceSwap: [],
 		// The default button 1. Add your buttons in the config.
 		buttons: {
 			"1": {
@@ -60,6 +62,7 @@ Module.register("MMM-Modulebar",{
 
 	// Override dom generator.
 	getDom: function() {
+		this.buttonUpdaters = [];
 		var overlay = document.createElement("div");
 		overlay.className = "paint-it-black";
 		overlay.style.transitionDuration = this.config.animationSpeed + "ms";
@@ -73,6 +76,18 @@ Module.register("MMM-Modulebar",{
 		}
 		menu.appendChild(overlay);
 		return menu;
+	},
+
+	// Only a button belonging to the swap group may hide its other members.
+	swapModules: function (data, modules) {
+		if (!Array.isArray(this.config.forceSwap) || !this.config.forceSwap.includes(data.module)) {
+			return;
+		}
+		modules.forEach((peer) => {
+			if (peer.name !== data.module && this.config.forceSwap.includes(peer.name) && !peer.hidden) {
+				peer.hide(this.config.animationSpeed, 0, {force: this.config.allowForce});
+			}
+		});
 	},
 
 	// Creates the buttons.
@@ -216,6 +231,10 @@ Module.register("MMM-Modulebar",{
 							}
 							// Shows the module.
 							modules[i].show(self.config.animationSpeed, 0, {force: self.config.allowForce});
+							// Keep the current group visible if another module's lock blocks showing this one.
+							if (!modules[i].hidden) {
+								self.swapModules(data, modules);
+							}
 							// Sets the defined symbol for shown module.
 							if (typeof data.symbol !== 'undefined') {
 								symbol.className = faclassName + data.symbol;
@@ -268,6 +287,9 @@ Module.register("MMM-Modulebar",{
 						}
 					}
 				}
+			}
+			if (data.module !== "all") {
+				self.buttonUpdaters.forEach((update) => update());
 			}
 		});
 		// Fixes the aligning.
@@ -322,6 +344,28 @@ Module.register("MMM-Modulebar",{
 			}
 			// Adds the text to the item.
 			item.appendChild(text);
+		}
+		// Refresh peer buttons too, so a swap cannot leave their labels or icons stale.
+		if (data.module !== "all") {
+			self.buttonUpdaters = self.buttonUpdaters || [];
+			var updateButton = function () {
+				var targets = modules.filter((target) => {
+					var number = target.data.identifier.split("_")[1];
+					return target.name === data.module && (data.idnum == null ||
+						(Array.isArray(data.idnum) ? data.idnum.some((id) => id == number) : data.idnum == number));
+				});
+				if (targets.length === 0) return;
+				var isHidden = targets.every((target) => target.hidden);
+				var icon = isHidden && data.symbol2 !== undefined ? data.symbol2 : data.symbol;
+				if (symbol && icon !== undefined) {
+					symbol.className = faclassName + icon;
+					if (data.size) symbol.className += " fa-" + data.size + (data.size == 1 ? "g" : "x");
+				}
+				if (image) image.src = isHidden && data.img2 !== undefined ? data.img2 : data.img;
+				if (text) text.innerHTML = isHidden && data.text2 !== undefined ? data.text2 : data.text;
+			};
+			self.buttonUpdaters.push(updateButton);
+			updateButton();
 		}
 		// All done. :)
 		return item;

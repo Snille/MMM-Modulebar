@@ -48,7 +48,7 @@ To update the module:
 ```bash
 cd ~/MagicMirror/modules/MMM-Modulebar
 git pull
-npm install
+npm ci --omit=dev
 ```
 
 ## Using The Module
@@ -73,6 +73,7 @@ The following properties can be configured:
 | Option             | Default | Description
 | ------------------ | ------- | -----------
 | `allowForce`       | `false` | Allow the module to force modules to be shown (if hidden and locked by ex. profile-switcher). <br><br> **Possible values:** `true` or `false`
+| `forceSwap`        | `[]`    | Module names that replace each other when shown using this bar. Showing one member hides visible members with a different name. Buttons outside this list work independently. See [Swapping Modules](#swapping-modules).
 | `showBorder`       | `true`  | Determines if the border around the buttons should be shown. <br><br> **Possible values:** `true` or `false`
 | `minWidth`         | `0px`   | The minimum width for all the buttons. <br><br> **Possible values:** `css length`
 | `minHeight`        | `0px`   | The minimum height for all the buttons. <br><br> **Possible values:** `css length`
@@ -157,6 +158,42 @@ An example:
     },
   }
 ````
+
+## Swapping Modules
+
+Set `forceSwap` to an array of exact, case-sensitive module names. When a button shows a hidden member, the bar hides the other named modules. Clicking a visible member still hides it normally. The default empty array keeps independent toggles.
+
+For example, place a calendar and news feed in the same region and switch between them:
+
+```javascript
+{
+  module: "MMM-Modulebar",
+  position: "bottom_bar",
+  config: {
+    forceSwap: ["calendar", "newsfeed"],
+    buttons: {
+      "1": { module: "calendar", text: "Calendar", text2: "Show calendar" },
+      "2": { module: "newsfeed", text: "News", text2: "Show news" },
+      "3": { module: "clock", text: "Clock" }
+    }
+  }
+}
+```
+
+The clock button does not affect the swap group. Multiple instances of the selected module name are kept together; `idnum` still limits which instances its button toggles. The bar updates its buttons' labels, symbols and images after a swap. Automatic peer hiding only changes visibility; `showUrl` and `hideUrl` run for the button clicked, as usual.
+
+Swapping happens on a button click, so it does not hide modules at startup or enforce exclusivity when another module changes visibility. Existing visibility locks are respected unless `allowForce` is enabled. If the selected module cannot be shown because it is locked, the currently visible group members remain visible.
+
+## Development
+
+Use Node.js 20.19+, 22.13+, or 24+ for the development tools. Install development dependencies and run all checks with:
+
+```bash
+npm ci
+npm run check
+```
+
+The tests use Node's built-in test runner and exercise button clicks, swap groups, instance selection and visibility locks.
 
 ## Custom CSS
 
