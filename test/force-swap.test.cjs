@@ -156,3 +156,19 @@ test("hide-all overlay remains independent of swap visibility", () => {
   buttons[0].click();
   assert.equal(overlay.classList.contains("paint-it-black--visible"), false);
 });
+
+test("hide-all overrides legacy display:none CSS and honors the configured stacking order", () => {
+  const { buttons, overlay } = harness([], {
+    zindex: 6,
+    buttons: { 1: { module: "all", symbol: "toggle-on", symbol2: "toggle-off" } }
+  });
+  assert.equal(overlay.style.display, "block");
+  assert.equal(overlay.style.zIndex, 5);
+  buttons[0].click();
+  assert.equal(overlay.classList.contains("paint-it-black--visible"), true);
+  assert.equal(buttons[0].style.zIndex, 6);
+  assert.match(buttons[0].children[0].className, /toggle-off$/);
+  buttons[0].click();
+  assert.equal(overlay.classList.contains("paint-it-black--visible"), false);
+  assert.match(buttons[0].children[0].className, /toggle-on$/);
+});

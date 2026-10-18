@@ -65,6 +65,10 @@ Module.register("MMM-Modulebar",{
 		this.buttonUpdaters = [];
 		var overlay = document.createElement("div");
 		overlay.className = "paint-it-black";
+		// Older custom.css examples use display:none; visibility now uses opacity.
+		overlay.style.display = "block";
+		// Keep the overlay immediately below its restore button, including custom z-index values.
+		overlay.style.zIndex = this.config.zindex - 1;
 		overlay.style.transitionDuration = this.config.animationSpeed + "ms";
 		var menu = document.createElement("span");
 		menu.className = "modulebar-menu";

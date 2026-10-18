@@ -4,6 +4,12 @@ All notable changes to this project will be documented in this file.
 
 ## Unreleased
 
+## 1.1.1 - 2026-10-18
+
+- Fixed the hide-all overlay remaining invisible with legacy `display: none` rules in custom.css after the native DOM migration.
+- Applied the configured `zindex` to the overlay as well as its restore button, keeping the button above the blackout layer.
+- Added a regression test for legacy CSS compatibility and custom stacking order; verified full-screen blackout and restoration on the development mirror.
+
 ## 1.1.0 - 2026-10-18
 
 - Integrated the `forceSwap` idea from basnelso's PR #17 with the current native DOM implementation and MagicMirror visibility API.
